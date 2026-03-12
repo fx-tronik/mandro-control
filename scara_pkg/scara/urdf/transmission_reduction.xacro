@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<!-- axis X -->
+<xacro:property name="joint1_reduction"  value="${350010.870760128/1.0012296915}" />
+
+<!-- axis Z -->
+<xacro:property name="joint2_reduction"  value="${2000000.0/0.99538}" />
+
+<!-- axis C1 - big arm -->
+<xacro:property name="joint3_reduction"  value="111408.460164327" />
+
+<!-- axis C2 - small arm -->
+<xacro:property name="joint4_reduction"  value="55704.2300821634" />
+
+<!-- axis A - inclination of the gripper -->
+<xacro:property name="joint5_reduction"  value="31830.9886183791" />
+
+<!-- axis V - gripper -->
+<xacro:property name="joint6_reduction"  value="31830.9886183791" />
+
+<!-- additional joint - degree of freedom -->
+<xacro:property name="joint7_reduction"  value="1" />
+
+</robot>

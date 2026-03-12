@@ -1,0 +1,162 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<xacro:property name="PI" value="3.14159265358979" />
+<xacro:property name="R1" value="0.62" />
+<xacro:property name="Zx" value="0.0" />
+<xacro:property name="Zy" value="0.0" />
+<xacro:property name="Zz" value="0.0" />
+<xacro:property name="C1x" value="0" />
+<xacro:property name="C1y" value="0.005" />
+<xacro:property name="C1z" value="-0.0035925695657901616" />
+<xacro:property name="C2x" value="0.0" />
+<xacro:property name="C2y" value="0.02" />
+<xacro:property name="C2z" value="0.012105270670150039" />
+<xacro:property name="Ax" value="0.0" />
+<xacro:property name="Ay" value="0.0" />
+<xacro:property name="Az" value="0.0" />
+
+
+<!-- MARKER or CAMERA -->
+<xacro:property name="MorC" value="False"/>
+<xacro:if value="${MorC}">
+  <!--MARKER-->
+  <xacro:property name="Mx" value="0.057" />
+  <xacro:property name="My" value="0.12" />
+  <xacro:property name="Mz" value="-0.030" />
+  <xacro:property name="MR" value="0" />
+  <xacro:property name="MP" value="0" />
+  <xacro:property name="MY" value="0" />
+  <xacro:property name="Ex" value="${0.0-Mx}" />
+  <xacro:property name="Ey" value="${0.088-My}" />
+  <xacro:property name="Ez" value="${0.100-Mz}" />
+  <xacro:property name="ER" value="0" />
+  <xacro:property name="EP" value="0" />
+  <xacro:property name="EY" value="0" />
+</xacro:if>
+<xacro:unless value="${MorC}">
+  <!--CAMERA-->
+<!-- CAMERA PRZESUNIETA -5mm w osi X -->
+  <xacro:property name="Mx" value="0.032601745797096515" />
+  <xacro:property name="My" value="0.18453171300522642" />
+  <xacro:property name="Mz" value="-0.016973848757969097" />
+  <xacro:property name="MR" value="0.03229564301791958" />
+  <xacro:property name="MP" value="0.01538194006569883" />
+  <xacro:property name="MY" value="3.0730648401106975" />
+  <xacro:property name="Ex" value="0.021813034020402734" />
+  <xacro:property name="Ey" value="0.10121358042023153" />
+  <xacro:property name="Ez" value="0.11614025325711313" />
+  <xacro:property name="ER" value="0.033275922973526405" />
+  <xacro:property name="EP" value="0.013126573220331348" />
+  <xacro:property name="EY" value="-3.072598006090227" />
+</xacro:unless>
+
+<!-- Joint between baselink and link1 (axis X) -->
+<xacro:property name="joint1_origin_x"           value="0.0" />
+<xacro:property name="joint1_origin_y"           value="-0.482199999592743" />
+<xacro:property name="joint1_origin_z"           value="0.0172" />
+<xacro:property name="joint1_origin_roll"        value="-${PI/2}" />
+<xacro:property name="joint1_origin_pitch"       value="0.0" />
+<xacro:property name="joint1_origin_yaw"         value="-${PI}" />
+
+<xacro:property name="joint1_axis_x"             value="1" />
+<xacro:property name="joint1_axis_y"             value="0" />
+<xacro:property name="joint1_axis_z"             value="0" />
+
+<!-- Joint between link1 and link2 (axis Z) -->
+<xacro:property name="joint2_origin_x"           value="0.0" />
+<xacro:property name="joint2_origin_y"           value="0.0" />
+<xacro:property name="joint2_origin_z"           value="-0.052" />
+<xacro:property name="joint2_origin_roll"        value="${Zx + PI/2}" />
+<xacro:property name="joint2_origin_pitch"       value="${Zz}" />     <!-- ZAMIENIONE OSIE! -->
+<xacro:property name="joint2_origin_yaw"         value="${-Zy + PI}" /><!-- ZAMIENIONE OSIE! -->
+
+<xacro:property name="joint2_axis_x"             value="0" />
+<xacro:property name="joint2_axis_y"             value="0" />
+<xacro:property name="joint2_axis_z"             value="1" />
+
+<!-- Joint between link2 and link3 (axis C1 - big arm) -->
+<xacro:property name="joint3_origin_x"           value="0.0" />
+<xacro:property name="joint3_origin_y"           value="-0.285" />
+<xacro:property name="joint3_origin_z"           value="0.0407" />
+<xacro:property name="joint3_origin_roll"        value="${C1x}" />
+<xacro:property name="joint3_origin_pitch"       value="${-C1y}" />
+<xacro:property name="joint3_origin_yaw"         value="${PI - C1z}" />
+
+<xacro:property name="joint3_axis_x"             value="0" />
+<xacro:property name="joint3_axis_y"             value="0" />
+<xacro:property name="joint3_axis_z"             value="1" />
+
+<!-- Joint between link3 and link4 (axis C2 - small arm) -->
+<xacro:property name="joint4_origin_x"           value="0.0" />
+<xacro:property name="joint4_origin_y"           value="${R1}" />
+<xacro:property name="joint4_origin_z"           value="0.0436798" />
+<xacro:property name="joint4_origin_roll"        value="${-PI+C2x}" />
+<xacro:property name="joint4_origin_pitch"       value="${-C2y}" />
+<xacro:property name="joint4_origin_yaw"         value="${PI-C2z}" />
+
+<xacro:property name="joint4_axis_x"             value="0" />
+<xacro:property name="joint4_axis_y"             value="0" />
+<xacro:property name="joint4_axis_z"             value="1" />
+
+<!-- Joint between link4 and link5 (axis A - inclination of the gripper) -->
+<xacro:property name="joint5_origin_x"           value="0.0" />
+<xacro:property name="joint5_origin_y"           value="0.23389" />
+<xacro:property name="joint5_origin_z"           value="-0.03732" />
+<xacro:property name="joint5_origin_roll"        value="${-Ax}" />
+<xacro:property name="joint5_origin_pitch"       value="${-Ay}" />
+<xacro:property name="joint5_origin_yaw"         value="${Az}" />
+
+<xacro:property name="joint5_axis_x"             value="0" />
+<xacro:property name="joint5_axis_y"             value="-1" />
+<xacro:property name="joint5_axis_z"             value="0" />
+
+<!-- Joint between link5 and camera (additional joint - allways fixed) -->
+<xacro:property name="joint_camera_origin_x"     value="${Mx}" />
+<xacro:property name="joint_camera_origin_y"     value="${My}" />
+<xacro:property name="joint_camera_origin_z"     value="${Mz}" />
+<xacro:property name="joint_camera_origin_roll"  value="${MR}" />
+<xacro:property name="joint_camera_origin_pitch" value="${MP}" />
+<xacro:property name="joint_camera_origin_yaw"   value="${MY}" />
+
+<xacro:property name="joint_camera_axis_x"       value="0" />
+<xacro:property name="joint_camera_axis_y"       value="0" />
+<xacro:property name="joint_camera_axis_z"     	 value="1" />
+
+<!-- Joint between camera and effector (additional joint - degree of freedom) -->
+<xacro:property name="joint7_origin_x"           value="${Ex}" />
+<xacro:property name="joint7_origin_y"           value="${Ey}" />
+<xacro:property name="joint7_origin_z"           value="${Ez}" />
+<xacro:property name="joint7_origin_roll"        value="${ER}" />
+<xacro:property name="joint7_origin_pitch"       value="${EP}" />
+<xacro:property name="joint7_origin_yaw"         value="${EY}" />
+
+<xacro:property name="joint7_axis_x"             value="1" />
+<xacro:property name="joint7_axis_y"             value="0" />
+<xacro:property name="joint7_axis_z"             value="0" />
+
+<!-- Joint between effector and gripper (axis V - gripper) -->
+<xacro:property name="joint6_origin_x" 		       value="0.004" />
+<xacro:property name="joint6_origin_y" 		       value="-0.062194" />
+<xacro:property name="joint6_origin_z" 		       value="-0.055036" />
+<xacro:property name="joint6_origin_roll" 	     value="0.0" />
+<xacro:property name="joint6_origin_pitch" 	     value="0.0" />
+<xacro:property name="joint6_origin_yaw" 	       value="0" />
+
+<xacro:property name="joint6_axis_x" 		         value="-1" />
+<xacro:property name="joint6_axis_y" 		         value="0" />
+<xacro:property name="joint6_axis_z" 		         value="0" />
+
+<!-- Joint between gripper and mimic_gripper (additional joint - mimic gripper) -->
+<xacro:property name="joint6_mimic_origin_x" 	   value="-0.018" />
+<xacro:property name="joint6_mimic_origin_y" 	   value="0.125" />
+<xacro:property name="joint6_mimic_origin_z" 	   value="0.0" />
+<xacro:property name="joint6_mimic_origin_roll"  value="0.0" />
+<xacro:property name="joint6_mimic_origin_pitch" value="0.0" />
+<xacro:property name="joint6_mimic_origin_yaw"   value="${PI}" />
+
+<xacro:property name="joint6_mimic_axis_x" 	     value="-1" />
+<xacro:property name="joint6_mimic_axis_y" 	     value="0" />
+<xacro:property name="joint6_mimic_axis_z" 	     value="0" />
+
+</robot>

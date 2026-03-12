@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<launch>
+
+<!-- RQT RUNTIME MONITOR -->
+
+  <!-- <node name="monitor"
+  pkg="rqt_runtime_monitor"
+  type="rqt_runtime_monitor"
+  /> -->
+
+
+<!-- RQT RECONFIGURE (PID) MONITOR -->
+
+  <node name="monitor"
+  pkg="rqt_reconfigure"
+  type="rqt_reconfigure"
+  /> 
+
+<!-- ARM PLOT POSITIONS, VELOCITIES, ERROR -->
+
+  <arg name="axis" default="0" />
+
+  <node name="velocities"
+  pkg="rqt_plot"
+  type="rqt_plot"
+  args="
+  /arm_controller/follow_joint_trajectory/feedback/feedback/desired/velocities[$(arg axis)] 
+  /arm_controller/follow_joint_trajectory/feedback/feedback/actual/velocities[$(arg axis)]"
+  />
+
+  <node name="positions"
+  pkg="rqt_plot"
+  type="rqt_plot"
+  args="
+  /arm_controller/follow_joint_trajectory/feedback/feedback/desired/positions[$(arg axis)] 
+  /arm_controller/follow_joint_trajectory/feedback/feedback/actual/positions[$(arg axis)]"
+  />
+
+  <node name="error"
+  pkg="rqt_plot"
+  type="rqt_plot"
+  args="
+  /arm_controller/follow_joint_trajectory/feedback/feedback/error/positions[$(arg axis)] 
+  /arm_controller/follow_joint_trajectory/feedback/feedback/error/velocities[$(arg axis)]"
+  /> 
+
+<!-- GRIPPER PLOT POSITIONS, VELOCITIES, ERROR -->
+
+  <!-- <node name="velocities"
+  pkg="rqt_plot"
+  type="rqt_plot"
+  args="
+  /gripper_controller/follow_joint_trajectory/feedback/feedback/desired/velocities[0] 
+  /gripper_controller/follow_joint_trajectory/feedback/feedback/actual/velocities[0]"
+  />
+
+  <node name="positions"
+  pkg="rqt_plot"
+  type="rqt_plot"
+  args="
+  /gripper_controller/follow_joint_trajectory/feedback/feedback/desired/positions[0] 
+  /gripper_controller/follow_joint_trajectory/feedback/feedback/actual/positions[0]"
+  />
+
+  <node name="error"
+  pkg="rqt_plot"
+  type="rqt_plot"
+  args="
+  /gripper_controller/follow_joint_trajectory/feedback/feedback/error/positions[0] 
+  /gripper_controller/follow_joint_trajectory/feedback/feedback/error/velocities[0]"
+  />  -->
+
+<!-- ALL AXIS PLOT ERROR, VELOCITIES  -->
+
+  <!-- <node name="error"
+  pkg="rqt_plot"
+  type="rqt_plot"
+  args="
+  /arm_controller/follow_joint_trajectory/feedback/feedback/error/velocities[0]
+  /arm_controller/follow_joint_trajectory/feedback/feedback/error/velocities[1]
+  /arm_controller/follow_joint_trajectory/feedback/feedback/error/velocities[2]
+  /arm_controller/follow_joint_trajectory/feedback/feedback/error/velocities[3]
+  /arm_controller/follow_joint_trajectory/feedback/feedback/error/velocities[4]
+  /gripper_controller/follow_joint_trajectory/feedback/feedback/error/velocities[0]"
+  /> -->
+
+<!-- DIAGNOSTICS PLOT -->
+
+  <!-- <node name="axis_monitor"
+  pkg="rqt_plot"
+  type="rqt_plot"
+  args="
+  /diagnostics_ethCAT/data 
+  /diagnostics_ContMan/data"
+  />  -->
+
+
+</launch>

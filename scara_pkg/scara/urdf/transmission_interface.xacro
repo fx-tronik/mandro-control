@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<xacro:arg name="interface" default="Position" />
+
+<xacro:property name="interface"  value="$(arg interface)" />
+
+<xacro:include filename="$(find scara)/urdf/transmission_reduction.xacro" />
+
+    <!-- axis X -->
+    <transmission name="joint1_${interface}">
+        <type>transmission_interface/SimpleTransmission</type>
+            <joint name="joint1">
+                <hardwareInterface>hardware_interface/${interface}JointInterface</hardwareInterface>
+            </joint>
+        <actuator name="joint1_motor">
+            <mechanicalReduction>${joint1_reduction}</mechanicalReduction>
+            <hardwareInterface>hardware_interface/${interface}JointInterface</hardwareInterface>
+        </actuator>
+    </transmission>
+
+    <!-- axis Z -->
+    <transmission name="joint2_${interface}">
+        <type>transmission_interface/SimpleTransmission</type>
+            <joint name="joint2">
+                <hardwareInterface>hardware_interface/${interface}JointInterface</hardwareInterface>
+            </joint>
+        <actuator name="joint2_motor">
+            <mechanicalReduction>${joint2_reduction}</mechanicalReduction>
+            <hardwareInterface>hardware_interface/${interface}JointInterface</hardwareInterface>
+        </actuator>
+    </transmission>
+
+    <transmission name="joint4_${interface}">
+     <type>transmission_interface/C1C2Transmission</type>
+     <actuator name="joint3_motor">
+       <role>actuator1</role>
+       <mechanicalReduction>1.0</mechanicalReduction>
+     </actuator>
+     <actuator name="joint4_motor">
+       <role>actuator2</role>
+       <mechanicalReduction>1.0</mechanicalReduction>
+     </actuator>
+     <joint name="joint3">
+       <role>joint1</role>
+       <offset>0.0</offset>
+       <mechanicalReduction>${joint3_reduction}</mechanicalReduction>
+       <hardwareInterface>hardware_interface/${interface}JointInterface</hardwareInterface>
+     </joint>
+     <joint name="joint4">
+       <role>joint2</role>
+       <offset>0.0</offset>
+       <mechanicalReduction>${joint4_reduction}</mechanicalReduction>
+       <hardwareInterface>hardware_interface/${interface}JointInterface</hardwareInterface>
+     </joint>
+   </transmission>
+
+    <!-- axis A - inclination of the gripper -->
+    <transmission name="joint5_${interface}">
+        <type>transmission_interface/SimpleTransmission</type>
+            <joint name="joint5">
+                <hardwareInterface>hardware_interface/${interface}JointInterface</hardwareInterface>
+            </joint>
+        <actuator name="joint5_motor">
+            <mechanicalReduction>${joint5_reduction}</mechanicalReduction>
+            <hardwareInterface>hardware_interface/${interface}JointInterface</hardwareInterface>
+        </actuator>
+    </transmission>
+
+    <!-- axis V - gripper -->
+    <transmission name="joint6_Position">
+        <type>transmission_interface/GripperTransmission</type>
+            <joint name="joint6">
+                <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            </joint>
+        <actuator name="joint6_motor">
+            <mechanicalReduction>${joint6_reduction}</mechanicalReduction>
+            <R1>0.02</R1>
+            <R2>0.033601</R2>
+            <offset>0.017</offset>
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        </actuator>
+    </transmission>
+
+    <!-- additional joint - degree of freedom -->
+    <transmission name="joint7_${interface}">
+        <type>transmission_interface/SimpleTransmission</type>
+            <joint name="joint7">
+                <hardwareInterface>hardware_interface/${interface}JointInterface</hardwareInterface>
+            </joint>
+        <actuator name="joint7_motor">
+            <mechanicalReduction>${joint7_reduction}</mechanicalReduction>
+            <hardwareInterface>hardware_interface/${interface}JointInterface</hardwareInterface>
+        </actuator>
+    </transmission>
+
+</robot>

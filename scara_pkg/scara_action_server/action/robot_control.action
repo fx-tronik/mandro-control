@@ -1,0 +1,14 @@
+#goal definition
+std_msgs/String command
+float32[] position
+---
+#result definition
+bool success
+---
+#feedback
+std_msgs/String command
+int32 eta
+int32 points_count
+float32 progress
+float32[] position
+float32[] joints

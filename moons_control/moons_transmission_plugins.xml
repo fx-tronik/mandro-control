@@ -1,0 +1,19 @@
+<library path="lib/libmoons_transmission">
+
+  <class name="transmission_interface/C1C2Transmission"
+         type="transmission_interface::C1C2TransmissionLoader"
+         base_class_type="transmission_interface::TransmissionLoader">
+    <description>
+      Load from a URDF description the configuration of a simple transmission.
+    </description>
+  </class>
+
+  <class name="transmission_interface/GripperTransmission"
+         type="transmission_interface::GripperTransmissionLoader"
+         base_class_type="transmission_interface::TransmissionLoader">
+    <description>
+      Load from a URDF description the configuration of a simple transmission.
+    </description>
+  </class>
+
+</library>

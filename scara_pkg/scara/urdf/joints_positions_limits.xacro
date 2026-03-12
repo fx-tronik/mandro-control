@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<!-- Joint between baselink and link1 (axis X) -->
+<xacro:property name="joint1_limit_lower"         value="-0.9" />
+<xacro:property name="joint1_limit_upper"         value="1.0" />
+
+<!-- Joint between link1 and link2 (axis Z) -->
+<xacro:property name="joint2_limit_lower"         value="-0.13" />
+<xacro:property name="joint2_limit_upper"         value="0.0" />
+
+<!-- Joint between link2 and link3 (axis C1 - big arm) -->
+<xacro:property name="joint3_limit_lower"         value="-1.80" />
+<xacro:property name="joint3_limit_upper"         value="1.80" />
+
+<!-- Joint between link3 and link4 (axis C2 - small arm) -->
+<xacro:property name="joint4_limit_lower"         value="-2.0" />
+<xacro:property name="joint4_limit_upper"         value="2.0" />
+
+<!-- Joint between link4 and link5 (axis A - inclination of the gripper) -->
+<xacro:property name="joint5_limit_lower"         value="-0.65" />
+<xacro:property name="joint5_limit_upper"         value="0.65" />
+
+<!-- Joint between camera and effector (additional joint - degree of freedom) -->
+<xacro:property name="joint7_limit_lower"         value="-0.1" />
+<xacro:property name="joint7_limit_upper"         value="0.1" />
+
+<!-- Joint between effector and link6 (axis V - gripper) -->
+<xacro:property name="joint6_limit_lower"         value="0.015" />
+<xacro:property name="joint6_limit_upper"         value="0.0325" />
+
+<!-- Joint between link6 and link6_mimic (axis V - gripper) -->
+<xacro:property name="joint6_mimic_limit_lower"   value="-1.0" />
+<xacro:property name="joint6_mimic_limit_upper"   value="1.0" />
+
+</robot>

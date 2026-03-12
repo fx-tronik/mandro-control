@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="debug" default="false"/>
+  <arg name="simulation" default="false"/>
+  
+  <include file="$(find moons_control)/launch/server.launch">
+    <arg name="debug" value="$(arg debug)"/>
+    <arg name="simulation" value="$(arg simulation)"/>
+  </include>
+  
+  <node pkg="scara_action_server" type="pose_publisher.py" name="pose_publisher" />
+  <node pkg="scara_action_server" type="action_server.py" name="robot_control" />
+  <node pkg="scara_action_server" type="vacuum_controler.py" name="vacuum_controler" />
+</launch>
