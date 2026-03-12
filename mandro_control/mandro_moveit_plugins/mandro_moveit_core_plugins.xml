@@ -1,0 +1,7 @@
+<class_libraries>
+  <library path="lib/libmandro_moveit_core_plugins">
+    <class type="moveit_ros_control_interface::MandroMoveItControllerManager" base_class_type="moveit_controller_manager::MoveItControllerManager">
+        <description>ros_control controller manager interface for MoveIt</description>
+    </class>
+  </library>
+</class_libraries>

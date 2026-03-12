@@ -1,0 +1,6 @@
+bool reset
+int32 position
+---
+bool success
+string message
+int32 current_pos

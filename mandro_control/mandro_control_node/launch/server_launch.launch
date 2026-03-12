@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<launch>
+
+  <arg name="simulation" default="false" /> 
+
+  <!-- GDB functionality -->
+  <arg name="debug" default="false" />
+  <arg unless="$(arg debug)" name="launch_prefix" value="" />
+  <arg     if="$(arg debug)" name="launch_prefix" value="gdb --ex run --args" />
+
+  <!-- Run the main MoveIt! executable without trajectory execution (we do not have controllers configured by default) -->
+  <include file="$(find scara_moveit)/launch/move_group.launch">
+    <arg name="allow_trajectory_execution" value="true"/>
+    <arg name="fake_execution" value="false"/>
+    <arg name="info" value="true"/>
+    <arg name="debug" value="$(arg debug)"/>
+    <arg name="pipeline" value="ompl"/>
+    <arg name="interface" value="Velocity" />
+  </include>
+
+  <!-- Load hardware interface -->
+  <arg unless="$(arg simulation)" name="control_args" value="-i eno1 -p 1" />
+  <arg     if="$(arg simulation)" name="control_args" value="-l -p 1" />
+  <node name="hardware_interface" pkg="mandro_control_node" type="mandro_control_node" args="$(arg control_args)"
+        output="screen" launch-prefix="$(arg launch_prefix)"/>
+
+  <!-- Load joint limits-->
+  <rosparam file="$(find scara_moveit)/config/joint_limits.yaml" command="load"/>
+
+  <!-- Load controller settings -->
+  <arg name="arm_controller_mode" value="velocity_controllers/JointTrajectoryController" />
+  <arg name= "joint_group_controller_mode" value="velocity_controllers/JointGroupVelocityController" />
+  <group>
+    <rosparam file="$(find mandro_hw_interface)/config/mandro_controllers.yaml" command="load"/>
+    <param name="arm_controller/type" value="$(arg arm_controller_mode)"/>
+    <param name="joint_group_controller/type" value="$(arg joint_group_controller_mode)"/>
+  </group>
+
+  <!-- Load controller manager -->
+  <node name="ros_control_controller_manager_spawn" pkg="controller_manager" type="controller_manager" respawn="false"
+    output="screen" args="spawn 
+    joint_state_controller 
+    arm_controller
+    gripper_controller" />
+
+  <node name="ros_control_controller_manager_load" pkg="controller_manager" type="controller_manager" respawn="false"
+  output="screen" args="load 
+    joint_group_controller" />
+
+  <!-- Convert joint states to /tf tranforms -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+  
+  <!-- 
+  <node pkg="scara" type="pose_publisher.py" name="pose_publisher" />
+  <node pkg="scara" type="robot_control_server.py" name="robot_control" />
+  -->
+
+</launch>

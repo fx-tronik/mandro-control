@@ -1,0 +1,4 @@
+bool home
+---
+bool success
+string message 
